@@ -20,8 +20,7 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-
+#include <main.hpp>
 #include "app_common.h"
 
 #include "dbg_trace.h"

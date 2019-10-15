@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+#include <main.hpp>
 #include "app_common.h"
-#include "main.h"
 #include "app_entry.h"
 #include "app_ble.h"
 #include "ble.h"
