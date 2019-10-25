@@ -33,8 +33,8 @@ class DHT11 {
 public:
 	DHT11(GPIO_TypeDef *port, GPIO_Pin pin , GPIO_InitTypeDef &GPIO_InitStruct);
 
-	float getHumidity() const;
-	float getTemperature() const;
+	double getHumidity() const;
+	double getTemperature() const;
 
 	void init();
 

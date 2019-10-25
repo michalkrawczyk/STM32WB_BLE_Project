@@ -9,7 +9,7 @@
 
 
 DHT11::DHT11(GPIO_TypeDef *port, GPIO_Pin pin , GPIO_InitTypeDef &GPIO_InitStruct):
-m_port_ptr(*port),
+m_port_ptr(port),
 m_pin(pin),
 m_GPIO_InitStruct_ptr(&GPIO_InitStruct),
 m_humidity_integral(0u),
@@ -19,7 +19,6 @@ m_temperature_decimal(0u)
 {
 }
 
-//Todo:check arguments of HAL functions
 
 void DHT11::mSetInputGPIO()
 {
@@ -27,7 +26,7 @@ void DHT11::mSetInputGPIO()
 	m_GPIO_InitStruct_ptr->Pin = m_pin;
 	m_GPIO_InitStruct_ptr->Pull = GPIO_NOPULL;
 
-	GPIO_Init(*m_port_ptr, m_GPIO_InitStruct_ptr); //TODO:check
+	HAL_GPIO_Init(m_port_ptr, m_GPIO_InitStruct_ptr);
 }
 
 void DHT11::mSetOutputGPIO()
@@ -36,7 +35,8 @@ void DHT11::mSetOutputGPIO()
 	m_GPIO_InitStruct_ptr->Mode = GPIO_MODE_OUTPUT_PP;
 	m_GPIO_InitStruct_ptr->Pull = GPIO_NOPULL;
 	m_GPIO_InitStruct_ptr->Speed = GPIO_SPEED_FREQ_LOW;
-	GPIO_Init(*m_port_ptr, m_GPIO_InitStruct_ptr);
+
+	HAL_GPIO_Init(m_port_ptr, m_GPIO_InitStruct_ptr);
 }
 
 void DHT11::readData(uint8_t &data)
@@ -69,12 +69,12 @@ void DHT11::readData(uint8_t &data)
 
 
 
-float DHT11::getHumidity()
+float DHT11::getHumidity() const
 {
 	return m_humidity_integral + (m_humidity_decimal / 1000.);
 }
 
-float DHT11::getTemperature()
+float DHT11::getTemperature() const
 {
 	return m_temperature_integral + (m_temperature_decimal / 1000.);
 }
@@ -151,6 +151,6 @@ bool DHT11::isDataCorrect(uint8_t &parity_bit)
 {
 	return ((m_humidity_integral ^ m_humidity_decimal
 			^ m_temperature_integral
-			^ m_temperature_decimal) == parity);
+			^ m_temperature_decimal) == parity_bit);
 	//TODO: Rewrite - User manuals from DHT11 think that check sum and parity bit is the same ...
 }
