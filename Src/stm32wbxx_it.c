@@ -23,6 +23,7 @@
 #include "stm32wbxx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "app_common.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -198,6 +199,22 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /* USER CODE BEGIN 1 */
+void RTC_WKUP_IRQHandler(void)
+{
+	//handeler for RTC wake-up interrupt through EXTI line 19
+	HW_TS_RTC_Wakeup_Handler();
+}
 
+void IPCC_C1_RX_IRQHandler(void)
+{
+	//handler for IPCC RX occupied interrupt
+	HW_IPCC_Rx_Handler();
+}
+
+void IPCC_C1_TX_IRQHandler(void)
+{
+	//handler for IPCC TX free interrupt
+	HW_IPCC_Tx_Handler();
+}
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
