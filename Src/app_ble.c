@@ -684,7 +684,9 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_App_Notification( void *pckt )
 #if(RADIO_ACTIVITY_EVENT != 0)
         case 0x0004:
         /* USER CODE BEGIN RADIO_ACTIVITY_EVENT*/
-
+        	HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_SET);
+        	HAL_Delay(20);
+        	HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_RESET);
         /* USER CODE END RADIO_ACTIVITY_EVENT*/
         break; /* RADIO_ACTIVITY_EVENT */
 #endif
