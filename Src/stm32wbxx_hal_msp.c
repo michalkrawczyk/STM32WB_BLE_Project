@@ -22,7 +22,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 /* USER CODE BEGIN Includes */
-
+#include "otp.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -64,7 +64,14 @@
 void HAL_MspInit(void)
 {
   /* USER CODE BEGIN MspInit 0 */
+	OTP_ID0_t *otp_ptr;
 
+	otp_ptr = (OTP_ID0_t *) OTP_Read(0);
+
+	if (otp_ptr)
+	{
+		LL_RCC_HSE_SetCapacitorTuning(otp_ptr->hse_tuning);
+	}
   /* USER CODE END MspInit 0 */
 
   __HAL_RCC_HSEM_CLK_ENABLE();
