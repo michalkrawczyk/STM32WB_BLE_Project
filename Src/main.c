@@ -84,7 +84,6 @@ static void MX_TIM2_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	UTIL_SEQ_Run(UTIL_SEQ_DEFAULT);
   /* USER CODE END 1 */
   
 
@@ -125,7 +124,8 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+		UTIL_SEQ_Run(UTIL_SEQ_DEFAULT);
+		HAL_Delay(10);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
