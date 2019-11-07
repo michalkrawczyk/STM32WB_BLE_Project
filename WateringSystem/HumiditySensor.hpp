@@ -13,16 +13,19 @@
 extern ADC_HandleTypeDef hadc1;
 
 class HumiditySensor {
-    uint16_t data[MAX_STATION_COUNT];
-    float humidity[MAX_STATION_COUNT];
+    uint16_t m_data[MAX_STATION_COUNT];
 
 public:
     HumiditySensor();
-    //TODO: ADD humidity interpreter
 
     uint16_t getDataByIndex(uint8_t index) const;
     HAL_StatusTypeDef readHumidity();
 
-};
+    float getHumidityByIndex(uint8_t index) const;
+
+} hum_sensor;
+
+
+
 
 #endif /* HUMIDITYSENSOR_HPP_ */
