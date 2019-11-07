@@ -55,6 +55,7 @@ TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
+DMA_HandleTypeDef dma_adc1;
 
 /* USER CODE END PV */
 
@@ -257,7 +258,7 @@ static void MX_ADC1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN ADC1_Init 2 */
-
+  //TODO: Reconsider Config of ADC and DMA
   /* USER CODE END ADC1_Init 2 */
 
 }
@@ -606,7 +607,8 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-
+	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
+	//Turns on Red LED
   /* USER CODE END Error_Handler_Debug */
 }
 

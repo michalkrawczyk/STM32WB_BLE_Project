@@ -42,7 +42,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+extern DMA_HandleTypeDef dma_adc1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -119,6 +119,24 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* USER CODE BEGIN ADC1_MspInit 1 */
+    dma_adc1.Instance = 				DMA1_Channel1;
+
+    dma_adc1.Init.Direction = 			DMA_PERIPH_TO_MEMORY;
+    dma_adc1.Init.Request = 			DMA_REQUEST_ADC1;
+
+    dma_adc1.Init.PeriphInc = 			DMA_PINC_DISABLE;
+    dma_adc1.Init.MemInc = 				DMA_MINC_ENABLE;
+    dma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+    dma_adc1.Init.MemDataAlignment = 	DMA_MDATAALIGN_HALFWORD;
+
+    dma_adc1.Init.Mode = 				DMA_NORMAL;
+    dma_adc1.Init.Priority = 			DMA_PRIORITY_MEDIUM;
+
+    if(HAL_DMA_Init(&dma_adc1) != HAL_OK)
+    	Error_Handler();
+
+    __HAL_LINKDMA(hadc, DMA_Handle, dma_adc1);
+
 
   /* USER CODE END ADC1_MspInit 1 */
   }
