@@ -40,7 +40,7 @@ public:
 
 	bool checkResponse();
 	bool makeMeasure();
-	bool isDataCorrect(uint8_t &parity_bit);
+	bool isDataCorrect(const uint8_t &parity_bit);
 
 
 };

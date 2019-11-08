@@ -147,10 +147,11 @@ bool DHT11::makeMeasure()
 	return false;
 }
 
-bool DHT11::isDataCorrect(uint8_t &parity_bit)
+bool DHT11::isDataCorrect(const uint8_t &check_bit)
 {
-	return ((m_humidity_integral ^ m_humidity_decimal
-			^ m_temperature_integral
-			^ m_temperature_decimal) == parity_bit);
-	//TODO: Rewrite - User manuals from DHT11 think that check sum and parity bit is the same ...
+	uint16 checksum = m_humidity_integral + m_humidity_decimal + m_temperature_integral + m_temperature_integral;
+	uint8_t lsb = (uint8_t)(checksum & 0b1111);
+
+	return (0xF - lsb) == check_bit; //TODO:Check
+
 }
