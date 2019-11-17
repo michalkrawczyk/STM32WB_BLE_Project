@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
  ******************************************************************************
- * File Name          : template_server_app.h
+ * File Name          : temperature_server_app.h
  * Description        : P2P Server Application
  ******************************************************************************
   * @attention
@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 /* USER CODE BEGIN UserCode */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __TEMPLATE_SERVER_APP_H
-#define __TEMPLATE_SERVER_APP_H
+#ifndef __TEMPERATURE_SERVER_APP_H
+#define __TEMPERATURE_SERVER_APP_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,7 +32,7 @@ extern "C" {
   /* External variables --------------------------------------------------------*/
   /* Exported macros -----------------------------------------------------------*/
   /* Exported functions ------------------------------------------------------- */
-  void TEMPLATE_APP_Init( void );
+  void Temperature_APP_Init( void );
 
 #ifdef __cplusplus
 }

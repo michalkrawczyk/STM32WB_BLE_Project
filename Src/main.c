@@ -55,7 +55,6 @@ TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -74,7 +73,6 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /**
@@ -93,7 +91,6 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -125,7 +122,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  UTIL_SEQ_Run(UTIL_SEQ_DEFAULT);
-	  //HAL_Delay(10);
+	  HAL_Delay(100);
 
     /* USER CODE BEGIN 3 */
   }
