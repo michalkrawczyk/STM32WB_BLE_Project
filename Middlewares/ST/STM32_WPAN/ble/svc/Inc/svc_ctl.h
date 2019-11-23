@@ -149,6 +149,7 @@ extern "C" {
    * @retval None
    */
   void SVCCTL_InitCustomSvc( void );
+  void SVCCTL_InitHumidityReadSvc(void);
 
 #ifdef __cplusplus
 }

@@ -102,6 +102,7 @@ __weak void P2PS_STM_Init( void )
 {
   return;
 }
+
 __weak void OTAS_STM_Init( void )
 {
   return;
@@ -113,6 +114,11 @@ __weak void MESH_Init( void )
 __weak void SVCCTL_InitCustomSvc( void )
 {
   return;
+}
+
+__weak void SVCCTL_InitHumidityReadSvc(void)
+{
+	return;
 }
 
 /* Functions Definition ------------------------------------------------------*/
@@ -156,6 +162,8 @@ void SVCCTL_Init( void )
 
   SVCCTL_InitCustomSvc();
   
+  SVCCTL_InitHumidityReadSvc();
+
   MESH_Init();
 
   return;

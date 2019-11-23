@@ -178,7 +178,7 @@ static void Temperature_Send_Notification_Task(void)
   //TODO:ADD DHT READINGS HERE
   //TEMPLATE_Server_App_Context.Temperature.value = //add getter from DHT;
 
-  TEMPLATE_Server_App_Context.Temperature.time_stamp += TEMPERATURE_STEP;
+ temperature_server_app_context.Temperature.time_stamp += TEMPERATURE_CHANGE_STEP;
 
   // DEBUG FUNCTION
 //  temperature_server_app_context.Temperature.value += temperature_server_app_context.ChangeStep;

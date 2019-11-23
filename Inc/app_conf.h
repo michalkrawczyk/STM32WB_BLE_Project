@@ -481,6 +481,7 @@ typedef enum
   CFG_IdleTask_Update_Parameter,
 /* USER CODE BEGIN CFG_Task_Id_With_HCI_Cmd_t */
   	CFG_TASK_TEMPERATURE_NOTIFY,
+	CFG_TASK_HUMIDITY_READINGS_NOTIFY,
 /* USER CODE END CFG_Task_Id_With_HCI_Cmd_t */
     CFG_LAST_TASK_ID_WITH_HCICMD,                                               /**< Shall be LAST in the list */
 } CFG_Task_Id_With_HCI_Cmd_t;

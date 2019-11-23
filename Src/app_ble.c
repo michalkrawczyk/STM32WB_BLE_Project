@@ -38,7 +38,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "../Bluetooth/Server_Apps/Inc/humidity_read_app.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -245,7 +245,7 @@ uint8_t manuf_data[14] = {
     0x01/*SKD version */,
     CFG_DEV_ID_P2P_SERVER1 /* STM32WB - P2P Server 1*/,
     0x00 /* GROUP A Feature  */, 
-    0x04 /* GROUP A Feature */,
+    0x0C /* GROUP A Feature */,
     0x00 /* GROUP B Feature */,
     0x00 /* GROUP B Feature */,
     0x00, /* BLE MAC start -MSB */
@@ -468,7 +468,7 @@ void APP_BLE_Init( void )
    * Initialize Custom Server Application
    */
   Temperature_APP_Init();
-  
+  HumidityReaderAPPInit();
 
   /**
    * Create timer to handle the Advertising Stop
