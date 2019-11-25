@@ -7,6 +7,13 @@
 
 #ifndef SERVICES_INC_HUMIDITY_READ_STM_H_
 #define SERVICES_INC_HUMIDITY_READ_STM_H_
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Includes ------------------------------------------------------------------*/
 #ifndef tBleStatus
 	#include <ble_types.h>
 #endif
@@ -14,12 +21,7 @@
 #ifndef uint8_t
 	#include <sys/_stdint.h>
 #endif
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/* Includes ------------------------------------------------------------------*/
+/* Typedef Definitions ------------------------------------------------------------------*/
 
 typedef enum
 {

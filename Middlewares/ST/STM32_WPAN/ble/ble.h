@@ -54,6 +54,7 @@ extern "C" {
 #include "svc/Inc/mesh.h"  
 #include "temperature_stm.h"
 #include "../Bluetooth/Services/Inc/humidity_read_stm.h"
+#include "../Bluetooth/Services/Inc/humidity_set_stm.h"
   
 #include "svc/Inc/svc_ctl.h"
 

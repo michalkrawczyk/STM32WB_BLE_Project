@@ -111,6 +111,7 @@ __weak void MESH_Init( void )
 {
   return;
 }
+//Custom Services - BEGIN
 __weak void SVCCTL_InitCustomSvc( void )
 {
   return;
@@ -121,6 +122,11 @@ __weak void SVCCTL_InitHumidityReadSvc(void)
 	return;
 }
 
+__weak void SVCCTL_InitHumiditySetSvc(void)
+{
+	return;
+}
+//Custom Services - END
 /* Functions Definition ------------------------------------------------------*/
 
 void SVCCTL_Init( void )
@@ -160,9 +166,14 @@ void SVCCTL_Init( void )
 
   OTAS_STM_Init();
 
+  //Custom Services - BEGIN
   SVCCTL_InitCustomSvc();
   
   SVCCTL_InitHumidityReadSvc();
+
+  SVCCTL_InitHumiditySetSvc();
+
+  //Custom Services - END
 
   MESH_Init();
 

@@ -39,6 +39,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "../Bluetooth/Server_Apps/Inc/humidity_read_app.h"
+#include "../Bluetooth/Server_Apps/Inc/humidity_set_app.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -469,6 +470,7 @@ void APP_BLE_Init( void )
    */
   Temperature_APP_Init();
   HumidityReaderAPPInit();
+  HumiditySetterAPPInit();
 
   /**
    * Create timer to handle the Advertising Stop

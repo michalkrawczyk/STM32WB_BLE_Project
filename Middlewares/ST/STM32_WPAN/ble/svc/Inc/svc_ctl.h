@@ -148,8 +148,11 @@ extern "C" {
    * @param  None
    * @retval None
    */
+  //Custom Services - BEGIN
   void SVCCTL_InitCustomSvc( void );
   void SVCCTL_InitHumidityReadSvc(void);
+  void SVCCTL_InitHumiditySetSvc(void);
+  //Custom Services - END
 
 #ifdef __cplusplus
 }
