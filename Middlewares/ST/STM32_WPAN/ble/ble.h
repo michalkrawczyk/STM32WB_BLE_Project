@@ -52,7 +52,9 @@ extern "C" {
 #include "svc/Inc/p2p_stm.h"
 #include "svc/Inc/otas_stm.h"
 #include "svc/Inc/mesh.h"  
-#include "svc/Inc/template_stm.h"  
+#include "temperature_stm.h"
+#include "../Bluetooth/Services/Inc/humidity_read_stm.h"
+#include "../Bluetooth/Services/Inc/humidity_set_stm.h"
   
 #include "svc/Inc/svc_ctl.h"
 
