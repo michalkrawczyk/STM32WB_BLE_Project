@@ -25,7 +25,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "../DHT11/dht.h"
+#include "../DHT11/DWT/dwt_stm32_delay.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,7 +56,7 @@ TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
-
+GPIO_InitTypeDef GPIO_InitStruct;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -84,7 +85,6 @@ static void MX_TIM2_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
   
 
@@ -115,10 +115,14 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
-
+   DWT_Delay_Init();
+   initDHT();
+   if(makeMeasureDHT())
+   {
+	   HAL_GPIO_WritePin(LD2_Green_Led__GPIO_Port, LD2_Green_Led__Pin, GPIO_PIN_SET);
+   }
   /* Init code for STM32_WPAN */  
   APPE_Init();
-
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -535,7 +539,7 @@ static void MX_TIM2_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
