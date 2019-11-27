@@ -6,9 +6,9 @@
  */
 
 #include "DHT11.hpp"
+#include "../DHT11/DWT/dwt.h"
 
-
-DHT11::DHT11(GPIO_TypeDef *port, GPIO_Pin pin , GPIO_InitTypeDef &GPIO_InitStruct):
+DHT11::DHT11(GPIO_TypeDef *port, uint16_t pin , GPIO_InitTypeDef &GPIO_InitStruct):
 m_port_ptr(port),
 m_pin(pin),
 m_GPIO_InitStruct_ptr(&GPIO_InitStruct),
@@ -51,7 +51,7 @@ void DHT11::readData(uint8_t &data)
 		 * 26-28 us voltage length means bit=0
 		 *so after e.g 60us if voltage is high it means bit=1
 		 *  */
-		DWT_Delay(60u);
+		delayUS_ASM(60u);
 		if(HAL_GPIO_ReadPin(m_port_ptr, m_pin) == GPIO_PIN_SET)
 		{
 			data |= (1 << (7 - i)); 		// bit=1
@@ -69,14 +69,14 @@ void DHT11::readData(uint8_t &data)
 
 
 
-float DHT11::getHumidity() const
+uint16_t DHT11::getHumidity() const
 {
-	return m_humidity_integral + (m_humidity_decimal / 1000.);
+	return ((m_humidity_integral << 8) | m_humidity_decimal);
 }
 
-float DHT11::getTemperature() const
+uint16_t DHT11::getTemperature() const
 {
-	return m_temperature_integral + (m_temperature_decimal / 1000.);
+	return ((m_temperature_integral << 8) | m_temperature_decimal);
 }
 
 void DHT11::init()
@@ -84,7 +84,7 @@ void DHT11::init()
 	DHT11::mSetOutputGPIO();
 
 	HAL_GPIO_WritePin(m_port_ptr, m_pin, GPIO_PIN_RESET);
-	DWT_Delay(18000u);
+	delayUS_ASM(18000u);
 
 	DHT11::mSetInputGPIO();
 }
@@ -94,10 +94,10 @@ bool DHT11::checkResponse()
 	//Add timeout?
 	DHT11::init();
 
-	DWT_Delay(40u); //Delay for 40us
+	delayUS_ASM(40u); //Delay for 40us
 	if(HAL_GPIO_ReadPin(m_port_ptr, m_pin) == GPIO_PIN_RESET)
 	{
-		DWT_Delay(80u);	//Delay for 80us
+		delayUS_ASM(80u);	//Delay for 80us
 		if (HAL_GPIO_ReadPin(m_port_ptr, m_pin) == GPIO_PIN_SET)
 		{
 			while(HAL_GPIO_ReadPin(m_port_ptr, m_pin) == GPIO_PIN_SET);
@@ -149,7 +149,7 @@ bool DHT11::makeMeasure()
 
 bool DHT11::isDataCorrect(const uint8_t &check_bit)
 {
-	uint16 checksum = m_humidity_integral + m_humidity_decimal + m_temperature_integral + m_temperature_integral;
+	uint16_t checksum = m_humidity_integral + m_humidity_decimal + m_temperature_integral + m_temperature_integral;
 	uint8_t lsb = (uint8_t)(checksum & 0b1111);
 
 	return (0xF - lsb) == check_bit; //TODO:Check

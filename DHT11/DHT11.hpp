@@ -15,7 +15,7 @@
 
 class DHT11 {
 	GPIO_TypeDef *m_port_ptr;
-	GPIO_Pin m_pin;
+	uint16_t m_pin;
 	GPIO_InitTypeDef *m_GPIO_InitStruct_ptr;
 
 
@@ -31,10 +31,10 @@ class DHT11 {
 	void readData(uint8_t &data);
 
 public:
-	DHT11(GPIO_TypeDef *port, GPIO_Pin pin , GPIO_InitTypeDef &GPIO_InitStruct);
+	DHT11(GPIO_TypeDef *port, uint16_t pin , GPIO_InitTypeDef &GPIO_InitStruct);
 
-	double getHumidity() const;
-	double getTemperature() const;
+	uint16_t getHumidity() const;
+	uint16_t getTemperature() const;
 
 	void init();
 
