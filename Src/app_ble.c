@@ -20,7 +20,6 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "temperature_server_app.h"
 #include "main.h"
 
 #include "app_common.h"
@@ -40,6 +39,7 @@
 /* USER CODE BEGIN Includes */
 #include "../Bluetooth/Server_Apps/Inc/humidity_read_app.h"
 #include "../Bluetooth/Server_Apps/Inc/humidity_set_app.h"
+#include "../Bluetooth/Server_Apps/Inc/temperature_server_app.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -537,7 +537,7 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_App_Notification( void *pckt )
         P2PS_APP_Notification(&handleNotification);
 
       /* USER CODE BEGIN EVT_DISCONN_COMPLETE */
-        HAL_GPIO_WritePin(LD1_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(BLUE_LED_Port, BLUE_LED_Pin, GPIO_PIN_RESET);
       /* USER CODE END EVT_DISCONN_COMPLETE */
     }
 
@@ -556,9 +556,7 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_App_Notification( void *pckt )
           APP_DBG_MSG("\r\n\r** CONNECTION UPDATE EVENT WITH CLIENT \n");
 #endif
           /* USER CODE BEGIN EVT_LE_CONN_UPDATE_COMPLETE */
-          HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_SET);
-          HAL_Delay(50);
-          HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_RESET);
+
           /* USER CODE END EVT_LE_CONN_UPDATE_COMPLETE */
           break;
         case EVT_LE_PHY_UPDATE_COMPLETE:
@@ -642,7 +640,7 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_App_Notification( void *pckt )
           handleNotification.ConnectionHandle = BleApplicationContext.BleApplicationContext_legacy.connectionHandle;
           P2PS_APP_Notification(&handleNotification);
           /* USER CODE BEGIN HCI_EVT_LE_CONN_COMPLETE */
-
+          HAL_GPIO_WritePin(BLUE_LED_Port, BLUE_LED_Pin, GPIO_PIN_SET);
           /* USER CODE END HCI_EVT_LE_CONN_COMPLETE */
           }
         break; /* HCI_EVT_LE_CONN_COMPLETE */
@@ -688,7 +686,7 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_App_Notification( void *pckt )
 #if(RADIO_ACTIVITY_EVENT != 0)
         case 0x0004:
         /* USER CODE BEGIN RADIO_ACTIVITY_EVENT*/
-        	HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_SET);
+        	//HAL_GPIO_WritePin(BLUE_LED_Port, BLUE_LED_Pin, GPIO_PIN_SET);
         	//HAL_DELAY here interrupts connections
         /* USER CODE END RADIO_ACTIVITY_EVENT*/
         break; /* RADIO_ACTIVITY_EVENT */

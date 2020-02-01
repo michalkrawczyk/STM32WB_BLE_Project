@@ -167,7 +167,7 @@ void SVCCTL_InitHumiditySetSvc(void)
 	#endif
 }
 
-tBleStatus HumiditySetterAppUpdateChar(uint16_t uuid, uint8_t *payload_ptr)
-{
-	//TODO Check if this is necessary
-}
+//tBleStatus HumiditySetterAppUpdateChar(uint16_t uuid, uint8_t *payload_ptr)
+//{
+//	//TODO Check if this is necessary
+//}

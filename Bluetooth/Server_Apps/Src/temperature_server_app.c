@@ -20,7 +20,8 @@
 
 /* USER CODE BEGIN UserCode */
 /* Includes ------------------------------------------------------------------*/
-#include "temperature_server_app.h"
+#include "../Inc/temperature_server_app.h"
+
 #include "app_common.h"
 #include "dbg_trace.h"
 #include "ble.h"
@@ -38,16 +39,16 @@ typedef struct
   uint8_t  NotificationStatus;
   uint16_t Parameter;
   TemperatureCharValue_t Temperature;
-//  int16_t ChangeStep; 					//Additionally TODO: Find naming convention for structs
+  int16_t ChangeStep; 					//Additionally TODO: Find naming convention for structs
   uint8_t Update_timer_ID;
 } Temperature_Server_App_Context_t;
 
 
 /* Private defines -----------------------------------------------------------*/
-#define TEMPERATURE_CHANGE_STEP 10
-#define TEMPERATURE_CHANGE_PERIOD	(1 * 1000 * 1000 / CFG_TS_TICK_VAL) 	// 1s
-//#define TEMPERATURE_VALUE_MAX_THRESHOLD 350
-//#define TEMPERATURE_VALUE_MIN_THRESHOLD 100   // For Debug
+#define TEMPERATURE_CHANGE_STEP 11
+#define TEMPERATURE_CHANGE_PERIOD	(3 * 1000 * 1000 / CFG_TS_TICK_VAL) 	// 3s
+#define TEMPERATURE_VALUE_MAX_THRESHOLD 350
+#define TEMPERATURE_VALUE_MIN_THRESHOLD 100   // For Debug
 
 /* Private macros ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -69,7 +70,7 @@ static void Temperature_Send_Notification_Task(void);
 
 static void TemperatureChange_Timer_Callback(void)
 {
-	UTIL_SEQ_SetTask(1 << CFG_TASK_TEMPERATURE_NOTIFY, CFG_SCH_PRIO_0);
+	UTIL_SEQ_SetTask(1 << CFG_TASK_TEMPERATURE_NOTIFY, 2);
 }
 
 
@@ -100,20 +101,6 @@ void TEMPERATURE_STM_App_Notification(Temperature_STM_App_Notification_evt_t *pN
       HW_TS_Stop(temperature_server_app_context.Update_timer_ID);
 
       break; /* TEMPLATE_STM_NOTIFY_DISABLED_EVT */
-//TODELETE
-//    case TEMPLATE_STM_WRITE_EVT:
-//#if(CFG_DEBUG_APP_TRACE != 0)
-//      APP_DBG_MSG("-- TEMPLATE APPLICATION SERVER : WRITE EVENT RECEIVED\n");
-//      APP_DBG_MSG("-- TEMPLATE APPLICATION SERVER : 0x%x\n",pNotification->DataTransfered.pPayload[0]);
-//      APP_DBG_MSG(" \n\r");
-//#endif
-//      if(pNotification->DataTransfered.pPayload[0] == 0x00)
-//      {
-//#if(CFG_DEBUG_APP_TRACE != 0)
-//      APP_DBG_MSG("-- TEMPLATE APPLICATION SERVER : START TASK 2 \n");
-//#endif
-//      }
-//      break; /* TEMPLATE_STM_WRITE_EVT */
 
 #if(BLE_CFG_OTA_REBOOT_CHAR != 0)       
     case TEMPERATURE_STM_BOOT_REQUEST_EVT:
@@ -163,7 +150,7 @@ static void Temperature_APP_context_Init(void)
   temperature_server_app_context.Temperature.time_stamp = 0;
   temperature_server_app_context.Temperature.value = 0;
 
-//  temperature_server_app_context.ChangeStep = TEMPERATURE_CHANGE_STEP;
+  temperature_server_app_context.ChangeStep = TEMPERATURE_CHANGE_STEP;
 }
 
 static void Temperature_Send_Notification_Task(void)
@@ -178,20 +165,20 @@ static void Temperature_Send_Notification_Task(void)
   //TODO:ADD DHT READINGS HERE
   //TEMPLATE_Server_App_Context.Temperature.value = //add getter from DHT;
 
- temperature_server_app_context.Temperature.time_stamp += TEMPERATURE_CHANGE_STEP;
+ //temperature_server_app_context.Temperature.time_stamp += TEMPERATURE_CHANGE_STEP;
 
   // DEBUG FUNCTION
-//  temperature_server_app_context.Temperature.value += temperature_server_app_context.ChangeStep;
-//  temperature_server_app_context.Temperature.time_stamp += TEMPERATURE_CHANGE_STEP;
-//
-//  if (temperature_server_app_context.Temperature.value > TEMPERATURE_VALUE_MAX_THRESHOLD)
-//  {
-//	  temperature_server_app_context.ChangeStep = -TEMPERATURE_CHANGE_STEP;
-//  }
-//  else if (temperature_server_app_context.Temperature.value < TEMPERATURE_VALUE_MIN_THRESHOLD)
-//  {
-//	  temperature_server_app_context.ChangeStep = +TEMPERATURE_CHANGE_STEP;
-//  }
+  temperature_server_app_context.Temperature.value += temperature_server_app_context.ChangeStep;
+  temperature_server_app_context.Temperature.time_stamp += TEMPERATURE_CHANGE_STEP;
+
+  if (temperature_server_app_context.Temperature.value > TEMPERATURE_VALUE_MAX_THRESHOLD)
+  {
+	  temperature_server_app_context.ChangeStep = -TEMPERATURE_CHANGE_STEP;
+  }
+  else if (temperature_server_app_context.Temperature.value < TEMPERATURE_VALUE_MIN_THRESHOLD)
+  {
+	  temperature_server_app_context.ChangeStep = +TEMPERATURE_CHANGE_STEP;
+  }
 
 
   if(temperature_server_app_context.NotificationStatus)

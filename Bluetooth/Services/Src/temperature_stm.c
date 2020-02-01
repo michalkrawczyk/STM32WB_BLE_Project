@@ -78,14 +78,8 @@ do {\
 
 /* Hardware Characteristics Service */
 /*
- The following 128bits UUIDs have been generated from the random UUID
- generator:
- D973F2E0-B19E-11E2-9E96-0800200C9A66: Service 128bits UUID
- D973F2E1-B19E-11E2-9E96-0800200C9A66: Characteristic_1 128bits UUID
- D973F2E2-B19E-11E2-9E96-0800200C9A66: Characteristic_2 128bits UUID
  */
 #define COPY_TEMPLATE_SERVICE_UUID(uuid_struct)       COPY_UUID_128(uuid_struct,0x00,0x00,0x00,0x00,0x00,0x01,0x11,0xE1,0x9A,0xB4,0x00,0x02,0xA5,0xD5,0xC5,0x1B)
-//#define COPY_TEMPLATE_WRITE_CHAR_UUID(uuid_struct)    COPY_UUID_128(uuid_struct,0x00,0x00,0xAA,0xCC,0x8e,0x22,0x45,0x41,0x9d,0x4c,0x21,0xed,0xae,0x82,0xed,0x19)
 #define COPY_TEMPLATE_NOTIFY_UUID(uuid_struct)        COPY_UUID_128(uuid_struct,0x00,0x04,0x00,0x00,0x00,0x01,0x11,0xE1,0xAC,0x36,0x00,0x02,0xA5,0xD5,0xC5,0x1B)
 /*	0x00,0x04 - FEATURE?
 	0x00,0x00 - Service UUID - Here from undefined , normally from: https://www.bluetooth.com/specifications/gatt/services/
@@ -145,15 +139,6 @@ static SVCCTL_EvtAckStatus_t Template_Event_Handler(void *Event)
                 TEMPERATURE_STM_App_Notification(&Notification);
               }
             }
-//TODELETE
-//            else if(attribute_modified->Attr_Handle == (aTemplateContext.TemplateWriteClientToServerCharHdle + 1))
-//            {
-//              BLE_DBG_TEMPLATE_STM_MSG("-- GATT : WRITE CHAR INFO RECEIVED\n");
-//              Notification.Template_Evt_Opcode = TEMPLATE_STM_WRITE_EVT;
-//              Notification.DataTransfered.Length=attribute_modified->Attr_Data_Length;
-//              Notification.DataTransfered.pPayload=attribute_modified->Attr_Data;
-//              TEMPLATE_STM_App_Notification(&Notification);
-//            }
           
             else if(attribute_modified->Attr_Handle == (aTemplateContext.RebootReqCharHdle + 1))
             {
@@ -215,20 +200,6 @@ void SVCCTL_InitCustomSvc(void)
                       8, /*Max_Attribute_Records*/
                       &(aTemplateContext.TemperatureSvcHdle));
 
-    /**
-     *  Add Write Characteristic
-     */
-//TODELETE
-//    COPY_TEMPLATE_WRITE_CHAR_UUID(uuid16.Char_UUID_128);
-//    aci_gatt_add_char(aTemplateContext.TemplateSvcHdle,
-//                      UUID_TYPE_128, &uuid16,
-//                      2,
-//                      CHAR_PROP_WRITE_WITHOUT_RESP|CHAR_PROP_READ,
-//                      ATTR_PERMISSION_NONE,
-//                      GATT_NOTIFY_ATTRIBUTE_WRITE, /* gattEvtMask */
-//                      10, /* encryKeySize */
-//                      1, /* isVariable */
-//                      &(aTemplateContext.TemplateWriteClientToServerCharHdle));
 
     /**
      *   Add Notify Characteristic
