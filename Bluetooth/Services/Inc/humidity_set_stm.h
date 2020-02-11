@@ -47,7 +47,7 @@ typedef struct
 
 //void HumiditySetterInit(void);
 void HumiditySetterAppNotification(Humidity_Setter_APP_Notification_Evt_t *notification_ptr);
-tBleStatus HumiditySetterAppUpdateChar(uint16_t uuid, uint8_t *payload_ptr);
+//tBleStatus HumiditySetterAppUpdateChar(uint16_t uuid, uint8_t *payload_ptr);
 
 #ifdef __cplusplus
 }

@@ -28,7 +28,7 @@ typedef struct
 } HumidityReaderAppContext_t;
 
 /* Private defines -----------------------------------------------------------*/
-#define HUMIDITY_READER_CHANGE_STEP 10
+#define HUMIDITY_READER_CHANGE_STEP 1
 #define HUMIDITY_READER_CHANGE_PERIOD	(1 * 1000 * 1000 / CFG_TS_TICK_VAL) 	// 1s
 
 
@@ -145,8 +145,9 @@ static void HumidityReaderSendNotificationTask(void)
 
 static void HumidityChangeTimerCallback(void)
 {
+	humidity_reader_context.humidity.value +=1;
 	UTIL_SEQ_SetTask(1 << CFG_TASK_HUMIDITY_READINGS_NOTIFY,
-					 CFG_SCH_PRIO_0);
+					 1);
 }
 
 
