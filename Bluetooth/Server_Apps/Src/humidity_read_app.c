@@ -11,6 +11,10 @@
 #include "ble.h"
 #include "stm32_seq.h"
 
+#include "../WateringSystem/Inc/HumiditySensor.h"
+
+extern SensorData_t sensors;
+
 /* Private typedef -----------------------------------------------------------*/
 
 typedef struct
@@ -43,6 +47,8 @@ static void HumidityChangeTimerCallback(void);
 /* Public functions ----------------------------------------------------------*/
 void HumidityReaderAPPInit(void)
 {
+	HumidityReaderAPPcontextInit();
+
 	UTIL_SEQ_RegTask(1 << CFG_TASK_HUMIDITY_READINGS_NOTIFY,
 					 UTIL_SEQ_RFU,
 					 HumidityReaderSendNotificationTask);
@@ -53,7 +59,6 @@ void HumidityReaderAPPInit(void)
 				 HumidityChangeTimerCallback);
 
 	humidity_reader_context.notification_status = 0;
-	HumidityReaderAPPcontextInit();
 }
 
 
@@ -110,6 +115,8 @@ static void HumidityReaderAPPcontextInit(void)
 	humidity_reader_context.humidity.time_stamp = 0;
 	humidity_reader_context.humidity.value = 0;
 
+	humidity_reader_context.update_timer_id = TIM_ID_HUM_READ;
+
 }
 
 static void HumidityReaderSendNotificationTask(void)
@@ -121,8 +128,11 @@ static void HumidityReaderSendNotificationTask(void)
 	  value[2] = (uint8_t)(humidity_reader_context.humidity.value 		& 0x00FF);
 	  value[3] = (uint8_t)(humidity_reader_context.humidity.value 		>> 8);
 
-	  //TODO: ADD ADC Readings from Class Here
-	  //humidity_reader_context.humidity = readings
+	  if(humidity_reader_context.humidity.time_stamp == 0xFFFF)
+	  {
+		  humidity_reader_context.humidity.time_stamp = 0;
+	  }
+
 	  humidity_reader_context.humidity.time_stamp += HUMIDITY_READER_CHANGE_STEP;
 
 	  if(humidity_reader_context.notification_status)
@@ -145,7 +155,8 @@ static void HumidityReaderSendNotificationTask(void)
 
 static void HumidityChangeTimerCallback(void)
 {
-	humidity_reader_context.humidity.value +=1;
+	humidity_reader_context.humidity.value = SensorCnvUint(0);
+
 	UTIL_SEQ_SetTask(1 << CFG_TASK_HUMIDITY_READINGS_NOTIFY,
 					 1);
 }

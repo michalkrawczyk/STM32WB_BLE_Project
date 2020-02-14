@@ -62,8 +62,8 @@ TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
 
-uint16_t data[10];
-float test;
+//uint16_t data[10];
+//float test;
 extern Watering_Set_t watering_set;
 
 /* USER CODE END PV */
@@ -124,19 +124,17 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   SensorsInit(1);
+  InitValves();
   /* USER CODE END 2 */
 
   /* Init code for STM32_WPAN */  
   APPE_Init();
-
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
 	  UTIL_SEQ_Run(UTIL_SEQ_DEFAULT);
-	  HAL_Delay(100);
-
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -240,7 +238,8 @@ static void MX_ADC1_Init(void)
   /** Common config 
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV2;
+//  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV2;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV12;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
@@ -703,6 +702,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
 	if(watering_set.flag)
 	{
+		watering_set.flag = 0;
 		UTIL_SEQ_SetTask(1 << CFG_TASK_CONTROL_WATERING_SYSTEM, 1);
 	}
 }

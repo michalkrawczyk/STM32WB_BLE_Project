@@ -524,6 +524,8 @@ typedef enum
  * Supported requester to the MCU Low Power Manager - can be increased up  to 32
  * It lits a bit mapping of all user of the Low Power Manager
  */
+
+
 typedef enum
 {
     CFG_LPM_APP,
@@ -536,6 +538,16 @@ typedef enum
 /******************************************************************************
  * OTP manager
  ******************************************************************************/
+
+
+//ID for Timer Server
+typedef enum
+{
+	TIM_ID_HUM_READ = 10,
+
+}TIMER_ID_t;
+
+
 #define CFG_OTP_BASE_ADDRESS    OTP_AREA_BASE
 
 #define CFG_OTP_END_ADRESS      OTP_AREA_END_ADDR
