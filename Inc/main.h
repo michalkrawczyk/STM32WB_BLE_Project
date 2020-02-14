@@ -86,10 +86,7 @@ void Error_Handler(void);
 #define Valve3_GPIO_Port GPIOA
 #define B1_Pin GPIO_PIN_4
 #define B1_GPIO_Port GPIOC
-#define LD2_Green_Led__Pin GPIO_PIN_0
-#define LD2_Green_Led__GPIO_Port GPIOB
-#define LD3_Pin GPIO_PIN_1
-#define LD3_GPIO_Port GPIOB
+
 #define Valve7_Pin GPIO_PIN_12
 #define Valve7_GPIO_Port GPIOB
 #define Valve8_Pin GPIO_PIN_13
@@ -104,16 +101,35 @@ void Error_Handler(void);
 #define Valve5_GPIO_Port GPIOA
 #define Valve6_Pin GPIO_PIN_15
 #define Valve6_GPIO_Port GPIOA
-#define DHT11_PIN_Pin GPIO_PIN_7
-#define DHT11_PIN_GPIO_Port GPIOB
+#define DHT11_PIN_Pin GPIO_PIN_14
+#define DHT11_PIN_GPIO_Port GPIOC
+
+//Original from .ioc - IDE code generation for WB seems to brake up code
+
+//#define DHT11_PIN_Pin GPIO_PIN_11
+//#define DHT11_PIN_GPIO_Port GPIOC
+//#define LD1_Pin GPIO_PIN_5
+//#define LD1_GPIO_Port GPIOB
+//#define LD2_Green_Led__Pin GPIO_PIN_0
+//#define LD2_Green_Led__GPIO_Port GPIOB
+//#define LD3_Pin GPIO_PIN_1
+//#define LD3_GPIO_Port GPIOB
+
 #define B2_Pin GPIO_PIN_0
 #define B2_GPIO_Port GPIOD
 #define B3_Pin GPIO_PIN_1
 #define B3_GPIO_Port GPIOD
-#define LD1_Pin GPIO_PIN_5
-#define LD1_GPIO_Port GPIOB
-/* USER CODE BEGIN Private defines */
 
+/* USER CODE BEGIN Private defines */
+#define DHT11_Pin 		GPIO_PIN_11
+#define DHT11_GPIO_Port GPIOC
+
+#define BLUE_LED_Pin 	GPIO_PIN_5
+#define BLUE_LED_Port 	GPIOB
+#define GREEN_LED_Pin 	GPIO_PIN_0
+#define GREEN_LED_Port 	GPIOB
+#define RED_LED_Pin 	GPIO_PIN_1
+#define RED_LED_Port 	GPIOB
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

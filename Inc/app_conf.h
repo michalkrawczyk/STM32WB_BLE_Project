@@ -535,6 +535,7 @@ typedef enum
 /******************************************************************************
  * OTP manager
  ******************************************************************************/
+
 #define CFG_OTP_BASE_ADDRESS    OTP_AREA_BASE
 
 #define CFG_OTP_END_ADRESS      OTP_AREA_END_ADDR

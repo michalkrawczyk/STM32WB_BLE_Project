@@ -11,11 +11,15 @@
 #include "stdbool.h"
 #include "stdint.h"
 #include "main.h"
+#include "app_common.h"
+
 extern GPIO_InitTypeDef GPIO_InitStruct;
+DHT11_t dht;
 
-
+//#define TS_18ms	(18 * 1000 / CFG_TS_TICK_VAL)
 //Private Function Prototypes
 /////////////////////////////////////////////////
+
 
 static void setInputGPIO(void);
 static void setOutputGPIO(void);
@@ -37,6 +41,7 @@ void initDHT(void)
 	dht.parity_bit = 0;
 	dht.temperature_decimal = 0;
 	dht.temperature_integral = 0;
+//	dht.timer_id = 10;
 }
 
 bool makeMeasureDHT(void)
@@ -101,10 +106,14 @@ static void setOutputGPIO(void)
 
 static void initMeasureDHT(void)
 {
+
+	DWT_Reset();
 	setOutputGPIO();
 
 	HAL_GPIO_WritePin(DHT11_PIN_GPIO_Port, DHT11_PIN_Pin, GPIO_PIN_RESET);
+
 	DWT_Delay_us(18000);
+	//HAL_Delay(18000);
 
 	setInputGPIO();
 }

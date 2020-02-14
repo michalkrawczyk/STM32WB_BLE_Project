@@ -27,10 +27,10 @@ typedef struct
 			temperature_integral,
 			temperature_decimal,
 			parity_bit;
-} dht_t;
+//			timer_id;
+} DHT11_t;
 
-
-static dht_t dht;
+extern DHT11_t dht;
 
 
 bool makeMeasureDHT(void);

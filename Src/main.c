@@ -56,7 +56,9 @@ TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
-GPIO_InitTypeDef GPIO_InitStruct;
+GPIO_InitTypeDef GPIO_InitStruct  = {0};
+uint16_t data;
+uint8_t code;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -113,22 +115,25 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+  initDHT();
+  code = DWT_COUNTER_ENABLE();
   /* USER CODE END 2 */
-   DWT_Delay_Init();
-   initDHT();
-   if(makeMeasureDHT())
-   {
-	   HAL_GPIO_WritePin(LD2_Green_Led__GPIO_Port, LD2_Green_Led__Pin, GPIO_PIN_SET);
-   }
+
+
   /* Init code for STM32_WPAN */  
   APPE_Init();
+  //DWT_Delay_Init();
+  //DWT_Init();
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-	  HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_SET);
+	  makeMeasureDHT();
+	  data[0] = getTemperature();
+	  HAL_Delay(1000u);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -539,7 +544,6 @@ static void MX_TIM2_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -552,8 +556,9 @@ static void MX_GPIO_Init(void)
                           |Valve5_Pin|Valve6_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LD2_Green_Led__Pin|LD3_Pin|Valve7_Pin|Valve8_Pin 
-                          |Valve9_Pin|Valve10_Pin|LD1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GREEN_LED_Pin|RED_LED_Pin|Valve7_Pin|Valve8_Pin
+                            |Valve9_Pin|Valve10_Pin|BLUE_LED_Pin, GPIO_PIN_RESET);
+
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(DHT11_PIN_GPIO_Port, DHT11_PIN_Pin, GPIO_PIN_RESET);
@@ -575,8 +580,8 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : LD2_Green_Led__Pin LD3_Pin Valve7_Pin Valve8_Pin 
                            Valve9_Pin Valve10_Pin LD1_Pin */
-  GPIO_InitStruct.Pin = LD2_Green_Led__Pin|LD3_Pin|Valve7_Pin|Valve8_Pin 
-                          |Valve9_Pin|Valve10_Pin|LD1_Pin;
+  GPIO_InitStruct.Pin = GREEN_LED_Pin|RED_LED_Pin|Valve7_Pin|Valve8_Pin
+                            |Valve9_Pin|Valve10_Pin|BLUE_LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
