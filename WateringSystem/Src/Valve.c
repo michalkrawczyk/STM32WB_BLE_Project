@@ -79,7 +79,8 @@ void InitValves(void)
 	watering_set.valves[9].GPIO_pin = Valve10_Pin;
 	watering_set.valves[9].humidity_limit = 0;
 
-	watering_set.flag = 0;
+	watering_set.flags = 1;
+	watering_set.working_stations = 0;
 
 	UTIL_SEQ_RegTask(1 << CFG_TASK_CONTROL_WATERING_SYSTEM, 0, ControlWateringSystem);
 }
@@ -127,11 +128,33 @@ void ControlWateringSystem(void)
 
 	for(uint8_t i = 0; i < MAX_STATION_COUNT; ++i)
 	{
-		ControlValve(i, watering_set.p_sensors->data[i]);
+		//ControlValve(i, watering_set.p_sensors->data[i]);
+		ControlValve(i, SensorCnvUint(i));
 	}
-	watering_set.flag = 0;
+	watering_set.flags = 1;
 }
 
+void ManageSystem(uint8_t valve_id, uint16_t humidity)
+{
+	if(valve_id < MAX_STATION_COUNT)
+	{
+		uint16_t mask = 1 << valve_id;
+		watering_set.working_stations &= ~mask;
 
+		if(humidity > 0)
+		{
+			watering_set.working_stations |= mask;
+		}
+
+		if(watering_set.working_stations)
+		{
+			HAL_GPIO_WritePin(GREEN_LED_Port, GREEN_LED_Pin, GPIO_PIN_SET);
+		}
+		else
+		{
+			HAL_GPIO_WritePin(GREEN_LED_Port, GREEN_LED_Pin, GPIO_PIN_RESET);
+		}
+	}
+}
 
 

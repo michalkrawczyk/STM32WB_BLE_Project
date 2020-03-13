@@ -27,14 +27,18 @@ typedef struct
 	Valve_t valves[MAX_STATION_COUNT];
 	SensorData_t *p_sensors;
 
-	uint8_t flag;
+	uint8_t flags;
+	uint16_t working_stations;
 }Watering_Set_t;
+
+
 
 extern Watering_Set_t watering_set;
 
 void InitValves(void);
 void ControlValve(uint8_t valve_id, uint16_t humidity);
 void ControlWateringSystem(void);
+void ManageSystem(uint8_t valve_id, uint16_t humidity);
 
 
 

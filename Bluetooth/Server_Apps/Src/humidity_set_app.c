@@ -10,6 +10,9 @@
 #include "dbg_trace.h"
 #include "ble.h"
 #include "stm32_seq.h"
+#include "../WateringSystem/Inc/Valve.h"
+
+extern Watering_Set_t watering_set;
 
 #include "main.h"
 
@@ -76,6 +79,13 @@ static void HumiditySetAPPcontextInit(void)
 
 static void HumiditySetExecuteFunc(void)
 {
-	//TODO: add here passing value to water irrigation system
+	if (hum_set_app_context.parameter > 100)
+	{
+		hum_set_app_context.parameter = 100;
+	}
+
+	watering_set.valves[0].humidity_limit = hum_set_app_context.parameter;
+
+	ManageSystem(0, hum_set_app_context.parameter);
 }
 

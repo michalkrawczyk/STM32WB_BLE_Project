@@ -700,9 +700,9 @@ static void MX_GPIO_Init(void)
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
-	if(watering_set.flag)
+	if(watering_set.flags && watering_set.working_stations)
 	{
-		watering_set.flag = 0;
+		watering_set.flags = 0;
 		UTIL_SEQ_SetTask(1 << CFG_TASK_CONTROL_WATERING_SYSTEM, 1);
 	}
 }
