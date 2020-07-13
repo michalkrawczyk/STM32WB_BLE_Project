@@ -8,4 +8,4 @@ to develop skills in programming STM32 microcontrollers and get familiar
 with newer solutions (STM32WB was released quite recently with 
 introducing built-in BLE module)
 
-Project has been Abandoned due to mistake in design from biological side - roots tends to rot when humidity is at stable on not 0% level
+Project has been Abandoned due to mistake in design from biological side - roots tends to rot when humidity is at stable not 0% level
